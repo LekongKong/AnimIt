@@ -1,0 +1,46 @@
+{
+  "name": "react-generator",
+  "description": "react generator",
+  "version": "0.0.1",
+  "homepage": "https://github.com/tuoxiansp/playground",
+  "author": {
+    "name": "tuoxiansp",
+    "url": "github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuoxiansp/playground.git"
+  },
+  "engines": {
+    "node": ">= 6.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.6",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-add-module-exports": "^0.1.4",
+    "babel-plugin-transform-class-properties": "^6.6.0",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-polyfill": "^6.9.1",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "css-loader": "^0.18.0",
+    "expose-loader": "^0.7.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "gulp": "^3.9.0",
+    "gulp-install": "^0.6.0",
+    "gulp-webpack": "^1.5.0",
+    "html-webpack-plugin": "^1.7.0",
+    "lodash": "^4.11.1",
+    "normalize-css": "^2.3.1",
+    "puer": "^1.1.1",
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1",
+    "run-sequence": "^1.1.2",
+    "style-loader": "^0.12.3",
+    "url-loader": "^0.5.6",
+    "vinyl-named": "^1.1.0",
+    "webpack": "^1.12.1",
+    "webpack-stream": "^3.2.0"
+  }
+}

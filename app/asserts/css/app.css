@@ -1,0 +1,22 @@
+html {
+	font-size: 10px;
+}
+
+body {
+	background-color: #ececec;
+	font-size: 11pt;
+	font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+}
+
+hr {
+	border: 0;
+	border-top: 1px solid #eee;
+}
+
+a:link {
+	color: #000000;
+}
+
+a:visited {
+	color: #000000;
+}
