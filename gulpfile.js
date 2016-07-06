@@ -64,7 +64,7 @@ gulp.task('clean', function() {
 gulp.task('default', function() {
 	process.env.NODE_ENV = JSON.stringify('development');
 
-    return runSequence('clean', 'compile');
+    return runSequence('compile');
 });
 
 //部署

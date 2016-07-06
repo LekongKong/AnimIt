@@ -136,7 +136,7 @@ export const inOutBack = (t, s) => {
 };
 
 export const inBounce = t => {
-    return 1.0 - Easing.outBounce(1.0-t);
+    return 1.0 - outBounce(1.0-t);
 };
 
 export const outBounce = t => {
@@ -152,6 +152,6 @@ export const outBounce = t => {
 };
 
 export const inOutBounce = t => {
-    if (t < .5) return Easing.inBounce(t*2) * .5;
-    return Easing.outBounce(t*2-1.0) * .5 + .5;
+    if (t < .5) return inBounce(t*2) * .5;
+    return outBounce(t*2-1.0) * .5 + .5;
 };
