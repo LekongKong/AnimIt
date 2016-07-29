@@ -3,69 +3,40 @@
  */
 import generator from './generator';
 
+const linear = t => t;
+
 export default class Tween {
 
-    fromData;
+    from;
 
-    toData;
+    to;
 
-    duration;
+    during;
 
-    easeFunc;
+    curve = linear;
 
-    setter;
+    onUpdate;
 
-    from (f) {
-        if (typeof f != 'number') throw new Error('Invalid param: "from" must be a number!');
-        this.fromData = f;
-        return this;
-    }
+    onEnd;
 
-    to (t) {
-        if (typeof t != 'number') throw new Error('Invalid param: "to" must be a number!');
-        this.toData = t;
-        return this;
-    }
-
-    during (d) {
-        if (typeof d != 'number') throw new Error('Invalid param: "during" must be a number!');
-        this.duration = d;
-        return this;
-    }
-
-    curve (easeFunc) {
-        this.easeFunc = easeFunc;
-        return this;
-    }
-
-    use (setter) {
-        this.setter = setter || console.log;
-        return this;
-    }
-
-    onEnd (callback) {
-        this.endCallback = callback || function () {};
-        return this;
-    }
-
-    start (tick) {
-        tick = tick || requestAnimationFrame;
-        const endFunc = this.endCallback;
-        if (!this.easeFunc) {
-            this.easeFunc = t => {
-                return t;
-            };
+    constructor(options) {
+        if (typeof options.during != 'number') {
+            throw new Error('Invalid param: during');
         }
-        const gen = generator(this.fromData, this.toData, this.duration, this.easeFunc);
-        function run (generator, setter) {
-            const res = generator.next();
-            setter(res.value);
-            if (!res.done) {
-                tick(run.bind(this, generator, setter));
-            } else {
-                endFunc();
+        Object.assign(this, options);
+        this.gen = new generator(this.from, this.to, this.during, this.curve);
+    }
+
+    update() {
+        const res = this.gen.next();
+        if (this.onUpdate instanceof Function) {
+            this.onUpdate(res.value);
+        }
+        if (res.done) {
+            this.isEnd = true;
+            if (this.onEnd instanceof Function) {
+                this.onEnd();
             }
         }
-        run(gen, this.setter);
     }
 }

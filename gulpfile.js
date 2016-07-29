@@ -82,6 +82,5 @@ gulp.task('server', function() {
 
 //测试脚本
 gulp.task('test', function () {
-	process.env.NODE_ENV = JSON.stringify('production');
-	console.log(process.env.NODE_ENV);
+
 });

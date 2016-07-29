@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react';
 
 import Tween from './Tween';
 import * as easing from './easing';
+import easeRunner from './easeRunner';
 
 export default class Test extends Component {
 
@@ -14,20 +15,26 @@ export default class Test extends Component {
 
     handleButton () {
         const func = this.refs.select.value;
-        new Tween()
-            .from(this.state.left)
-            .to(innerWidth - 300)
-            .curve(easing[func])
-            .during(1000)
-            .use(tweenData => {
-                this.setState({left: tweenData});
-            })
-            .onEnd(() => {
+
+        let isEnd = false;
+
+        const tween = new Tween({
+            from: [0],
+            to: [innerWidth - 300],
+            curve: easing[func],
+            during: 1000,
+            onUpdate: value => {
+                this.setState({left: value[0]});
+            },
+            onEnd: () => {
+                isEnd = true;
                 setTimeout(() => {
                     this.setState({left: 0});
                 }, 500);
-            })
-            .start();
+            }
+        });
+
+        easeRunner(tween);
     }
 
     render() {
