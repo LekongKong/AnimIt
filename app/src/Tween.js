@@ -1,7 +1,7 @@
 /**
  * Created by b1ncer on 16/7/5.
  */
-import generator from './generator';
+import Generator from './generator';
 
 const linear = t => t;
 
@@ -24,7 +24,7 @@ export default class Tween {
             throw new Error('Invalid param: during');
         }
         Object.assign(this, options);
-        this.gen = new generator(this.from, this.to, this.during, this.curve);
+        this.gen = new Generator(this.from, this.to, this.during, this.curve);
     }
 
     update() {

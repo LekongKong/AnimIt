@@ -5,12 +5,12 @@ const calc = (start, end, duration, ease, begin, cb) => {
     cb(ease((new Date().getTime() - begin) / duration) * (end - start) + start);
 };
 
-export default function* generator (from, to, duration, ease) {
+export default function* Generator (from, to, duration, ease) {
     const begin = new Date().getTime();
-    let start, end, res, fns = [];
+    let res, fns = [];
     if (typeof from == 'number') {
-        start = from;
-        end = to;
+        const start = from;
+        const end = to;
 
         fns.push(
             () => {
@@ -30,41 +30,45 @@ export default function* generator (from, to, duration, ease) {
 
         fns.push(
             () => {
-                res = [];
+                res = from.slice();
             }
         );
 
-        for (let i = 0, j = from.length; i < j; i++) {
-            start = from[i];
-            end = to[i];
+        from.forEach((v, k) => {
+            const start = v;
+            const end = to[k];
+            if (start != end) {
+                fns.push(
+                    () => {
+                        calc(start, end, duration, ease, begin, value => {
+                            res[k] = value;
+                        })
+                    }
+                )
+            }
+        });
 
-            fns.push(
-                () => {
-                    calc(start, end, duration, ease, begin, value => {
-                        res.push(value);
-                    });
-                }
-            );
-        }
     } else {
 
         fns.push(
             () => {
-                res = {};
+                res = Object.assign({}, from);
             }
         );
 
         for (const key in from) {
-            start = from[key];
-            end = to[key];
+            const start = from[key];
+            const end = to[key];
 
-            fns.push(
-                () => {
-                    calc(start, end, duration, ease, begin, value => {
-                        res[key] = value;
-                    });
-                }
-            );
+            if (start != end) {
+                fns.push(
+                    () => {
+                        calc(start, end, duration, ease, begin, value => {
+                            res[key] = value;
+                        });
+                    }
+                );
+            }
         }
     }
     while (true) {
