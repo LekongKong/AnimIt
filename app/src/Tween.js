@@ -5,6 +5,7 @@ import Generator from './generator';
 
 const linear = t => t;
 
+//TODO 对 object 支持类似 {a: 1, b: 2, c: {x: 1, y: 2}} => {a: 10, c: {y: 100}} 变换
 export default class Tween {
 
     from;

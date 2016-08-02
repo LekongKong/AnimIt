@@ -2,20 +2,24 @@
 Tween by es2015
 
 ## USEAGE
-`          
-const inQuad = t => {
-    return t*t;
-}
-
-new Tween()
-     .from(0)
-     .to(300)
-     .curve(inQuad)
-     .during(1000)
-     .use(tweenData => {
-         console.log(tweenData);
-     })
-     .start();`
+`  
+const tween = new Tween({
+             from: [0],
+             to: [innerWidth - 300],
+             curve: easing[func],
+             during: 1000,
+             onUpdate: value => {
+                 this.setState({left: value[0]});
+             },
+             onEnd: () => {
+                 isEnd = true;
+                 setTimeout(() => {
+                     this.setState({left: 0});
+                 }, 500);
+             }
+    });
+ 
+         easeRunner(tween);`
      
 ## TEST
 

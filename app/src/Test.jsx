@@ -16,21 +16,13 @@ export default class Test extends Component {
     handleButton () {
         const func = this.refs.select.value;
 
-        let isEnd = false;
-
         const tween = new Tween({
-            from: [0],
-            to: [innerWidth - 300],
+            from: 0,
+            to: innerWidth - 300,
             curve: easing[func],
             during: 1000,
             onUpdate: value => {
-                this.setState({left: value[0]});
-            },
-            onEnd: () => {
-                isEnd = true;
-                setTimeout(() => {
-                    this.setState({left: 0});
-                }, 500);
+                this.setState({left: value});
             }
         });
 
