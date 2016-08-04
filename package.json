@@ -1,7 +1,7 @@
 {
   "name": "AnimIt",
   "description": "Animation everything!",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "homepage": "https://github.com/LekongKong/ES-Tween",
   "author": {
     "name": "tuoxiansp",
@@ -11,6 +11,7 @@
     "type": "git",
     "url": "https://github.com/LekongKong/ES-Tween"
   },
+  "main": "./dist/anim-it.js",
   "engines": {
     "node": ">= 5.3"
   },

@@ -83,13 +83,23 @@ export class TweenObject {
         return options.target && isFromNoneOrObject && isToObject;
     }
 
-    constructor(options, tweenClasses) {
+    constructor(options, tweenClasses = BASE_TWEENS) {
         Object.assign(this, options);
+
+        this.initFrom();
+
+        this.initGetter(tweenClasses);
+    }
+
+    initFrom() {
         if (this.from) {
             for (let key in this.from) {
                 this.target[key] = this.from[key];
             }
         }
+    }
+
+    initGetter(tweenClasses) {
         for (let key in this.to) {
             const childOption = {};
             childOption.from = this.target[key];

@@ -49,6 +49,6 @@ export const tick = (duration, fn, complete, start) => {
         if (start) {
             start();
         }
-        runner(begin);
+        requestAnimationFrame(runner.bind(null, begin));
     }
 };
