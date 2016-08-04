@@ -21,15 +21,6 @@ gulp.task('install', function() {
 		.pipe(install());
 });
 
-//编译项目代码
-gulp.task('compile', function() {
-	var dist = './dist';
-
-	return webpack(require('./webpack.config.js'))
-		.pipe(gulp.dest(dist));
-
-});
-
 //清空dest文件夹
 gulp.task('clean', function() {
 	var dist = './dist';
@@ -60,24 +51,18 @@ gulp.task('clean', function() {
  * 用户接口
  */
 
-//编译代码,并开启服务器和监听任务,开发用
-gulp.task('default', function() {
-	process.env.NODE_ENV = JSON.stringify('development');
+//编译项目代码
+gulp.task('compile', function() {
+	var dist = './dist';
 
-    return runSequence('compile');
-});
+	return webpack(require('./webpack.config.js'))
+		.pipe(gulp.dest(dist));
 
-//部署
-gulp.task('release', function () {
-	process.env.NODE_ENV = JSON.stringify('production');
-
-	return runSequence('clean', 'install', 'compile');
 });
 
 //服务器
 gulp.task('server', function() {
-	//看了下puer的实现很奇怪,不明白为什么node下也需要用闭包函数包变量.最后的结果是,在task外require(puer)会与webpack冲突.
-	child_process.exec('puer -a ./route.js -d ./dist');
+	require('puer')({dir: './dist'});
 });
 
 //测试脚本

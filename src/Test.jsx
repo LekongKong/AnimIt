@@ -1,6 +1,6 @@
 //chenyutong@baixing.com
 import React, {Component, PropTypes} from 'react';
-import dat from 'dat.gui/build/dat.gui';
+import dat from '../node_modules/dat.gui/build/dat.gui.js';
 import * as Transform from './Transform';
 import {TweenConcatStr} from './funny-tweens';
 import * as AnimIt from './index';
