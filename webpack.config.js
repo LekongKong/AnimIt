@@ -6,9 +6,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var _ = require('lodash');
 
 module.exports = _.assign({
-    entry: path.join(__dirname, './app/src/main.jsx'),
+    entry: [path.join(__dirname, './app/src/main.jsx'), path.join(__dirname, './app/src/index.js')],
     output: {
-        filename: '[name].[hash].js',
+        filename: '[name].js',
         path: path.join(__dirname, './dist'),
         hash: true,
         publicPath: '/'
@@ -46,11 +46,6 @@ module.exports = _.assign({
             showErrors: true,
             template: path.join(__dirname, '/app/index.ejs'),
             inject: 'body'
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': process.env.NODE_ENV
