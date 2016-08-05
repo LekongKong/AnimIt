@@ -1,9 +1,9 @@
 //chenyutong@baixing.com
 import React, {Component, PropTypes} from 'react';
-import dat from '../node_modules/dat.gui/build/dat.gui.js';
-import * as Transform from './Transform';
+import dat from '../../node_modules/dat.gui/build/dat.gui.js';
+import * as Transform from './../funny-tweens/Transform';
 import {TweenConcatStr} from './funny-tweens';
-import * as AnimIt from './index';
+import * as AnimIt from './../index';
 const anim = AnimIt.anim;
 
 AnimIt.registerCustomTweenClass(TweenConcatStr);

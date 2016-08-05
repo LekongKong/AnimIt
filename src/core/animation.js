@@ -1,17 +1,15 @@
 /**
  * Created by b1ncer on 16/8/2.
  */
-import tween from './Tween';
-
 export const anim = options => {
     return function() {
         return new Promise((resolve) => {
             const duration = options.duration;
             const delay = options.delay;
+            const tweenInstance = options.tween;
             const onStart = options.onStart;
             const onUpdate = options.onUpdate;
             const onComplete = options.onComplete;
-            const tweenInstance = tween({...options});
             const animFn = tick(duration, (whenBegin) => {
                 const now = new Date().getTime();
                 let progress = duration ? (now - whenBegin) / duration : 1;

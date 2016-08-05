@@ -98,7 +98,7 @@ export const moveThen = (v, m) => {
     const t0 = v[0] * m[0] + v[1] * m[4] + v[2] * m[8];
     const t1 = v[0] * m[1] + v[1] * m[5] + v[2] * m[9];
     const t2 = v[0] * m[2] + v[1] * m[6] + v[2] * m[10];
-    return Transform.thenMove(m, [t0, t1, t2]);
+    return thenMove(m, [t0, t1, t2]);
 };
 
 /**
@@ -121,7 +121,7 @@ export const translate = (x, y, z) => {
  * Return a Transform scaled by a vector in each
  *    dimension. This is a more performant equivalent to the result of
  *
- *    Transform.multiply(Transform.scale(s[0], s[1], s[2]), m).
+ *    multiply(scale(s[0], s[1], s[2]), m).
  *
  * @method thenScale
  * @static
@@ -283,7 +283,7 @@ export const aboutOrigin = (v, m) => {
     const t0 = v[0] - (v[0] * m[0] + v[1] * m[4] + v[2] * m[8]);
     const t1 = v[1] - (v[0] * m[1] + v[1] * m[5] + v[2] * m[9]);
     const t2 = v[2] - (v[0] * m[2] + v[1] * m[6] + v[2] * m[10]);
-    return Transform.thenMove(m, [t0, t1, t2]);
+    return thenMove(m, [t0, t1, t2]);
 };
 
 /**
@@ -419,7 +419,7 @@ export const interpret = m => {
 
     //bail out if our Matrix is singular
     if (mult >= Infinity) {
-        return {translate: Transform.getTranslate(M), rotate: [0, 0, 0], scale: [0, 0, 0], skew: [0, 0, 0]};
+        return {translate: getTranslate(M), rotate: [0, 0, 0], scale: [0, 0, 0], skew: [0, 0, 0]};
     }
 
     //evaluate Q1 = I - 2vv'/v'v
@@ -441,7 +441,7 @@ export const interpret = m => {
     Q1[9] = Q1[6];                      // 2,1 entry
 
     //reduce first column of M
-    const MQ1 = Transform.multiply(Q1, M);
+    const MQ1 = multiply(Q1, M);
 
     //SECOND ITERATION on (1,1) minor
     const x2 = [MQ1[5], MQ1[6]];
@@ -462,17 +462,17 @@ export const interpret = m => {
     Q2[9] = Q2[6];                      // 1,2 entry
 
     //calc QR decomposition. Q = Q1*Q2, R = Q'*M
-    let Q = Transform.multiply(Q2, Q1);      //note: really Q transpose
-    let R = Transform.multiply(Q, M);
+    let Q = multiply(Q2, Q1);      //note: really Q transpose
+    let R = multiply(Q, M);
 
     //remove negative scaling
-    const remover = Transform.scale(R[0] < 0 ? -1 : 1, R[5] < 0 ? -1 : 1, R[10] < 0 ? -1 : 1);
-    R = Transform.multiply(R, remover);
-    Q = Transform.multiply(remover, Q);
+    const remover = scale(R[0] < 0 ? -1 : 1, R[5] < 0 ? -1 : 1, R[10] < 0 ? -1 : 1);
+    R = multiply(R, remover);
+    Q = multiply(remover, Q);
 
     //decompose into rotate/scale/skew matrices
     const result = {};
-    result.translate = Transform.getTranslate(M);
+    result.translate = getTranslate(M);
     result.rotate = [Math.atan2(-Q[6], Q[10]), Math.asin(Q[2]), Math.atan2(-Q[1], Q[0])];
     if (!result.rotate[0]) {
         result.rotate[0] = 0;
@@ -509,8 +509,8 @@ export const interpret = m => {
  */
 export const average = (m1, m2, t) => {
     t = (t === undefined) ? 0.5 : t;
-    const specM1 = Transform.interpret(M1);
-    const specM2 = Transform.interpret(M2);
+    const specM1 = interpret(M1);
+    const specM2 = interpret(M2);
 
     const specAvg = {
         translate: [0, 0, 0],
@@ -525,7 +525,7 @@ export const average = (m1, m2, t) => {
         specAvg.scale[i] = (1 - t) * specM1.scale[i] + t * specM2.scale[i];
         specAvg.skew[i] = (1 - t) * specM1.skew[i] + t * specM2.skew[i];
     }
-    return Transform.build(specAvg);
+    return build(specAvg);
 };
 
 /**
@@ -539,10 +539,10 @@ export const average = (m1, m2, t) => {
  * @return {Transform} composed transform
  */
 export const build = spec => {
-    const scaleMatrix = Transform.scale(spec.scale[0], spec.scale[1], spec.scale[2]);
-    const skewMatrix = Transform.skew(spec.skew[0], spec.skew[1], spec.skew[2]);
-    const rotateMatrix = Transform.rotate(spec.rotate[0], spec.rotate[1], spec.rotate[2]);
-    return Transform.thenMove(Transform.multiply(Transform.multiply(rotateMatrix, skewMatrix), scaleMatrix), spec.translate);
+    const scaleMatrix = scale(spec.scale[0], spec.scale[1], spec.scale[2]);
+    const skewMatrix = skew(spec.skew[0], spec.skew[1], spec.skew[2]);
+    const rotateMatrix = rotate(spec.rotate[0], spec.rotate[1], spec.rotate[2]);
+    return thenMove(multiply(multiply(rotateMatrix, skewMatrix), scaleMatrix), spec.translate);
 };
 
 /**
@@ -556,7 +556,7 @@ export const build = spec => {
  * @return {boolean}
  */
 export const equals = (a, b) => {
-    return !Transform.notEquals(a, b);
+    return !notEquals(a, b);
 };
 
 /**

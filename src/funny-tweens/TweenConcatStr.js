@@ -1,9 +1,9 @@
 /**
- * Created by b1ncer on 16/8/3.
+ * Created by b1ncer on 16/8/5.
  */
-import _typeof from './type';
+import _typeof from '../core/type';
 
-export class TweenConcatStr {
+export default class TweenConcatStr {
 
     str;
 

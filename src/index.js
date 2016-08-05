@@ -2,19 +2,27 @@
  * Created by b1ncer on 16/8/3.
  */
 
-import * as easing from './easing';
-import * as Transform from './Transform';
-import * as Tween from './Tween';
-import * as Animation from './animation';
+import * as Easings from './core/easing';
+import * as Tween from './core/core-tweens';
+import * as Animation from './core/animation';
+import * as FunnyTweens from './funny-tweens/index';
 
-export const anim = Animation.anim;
+const anim = Animation.anim;
 
-export const registerCustomTweenClass = Tween.registerTweenClass;
+const TweenNumber = Tween.TweenNumber;
 
-export const TweenNumber = Tween.TweenNumber;
+const TweenArray = Tween.TweenArray;
 
-export const TweenArray = Tween.TweenArray;
+const TweenReference = Tween.TweenReference;
 
-export const TweenObject = Tween.TweenObject;
+const TweenObject = Tween.TweenObject;
 
-export const Easings = easing;
+export {
+    anim,
+    TweenNumber,
+    TweenArray,
+    TweenReference,
+    TweenObject,
+    FunnyTweens,
+    Easings
+};
