@@ -3,7 +3,7 @@
  */
 import TweenConcatStr from './TweenConcatStr';
 
-import TweenCSSTransform from './TweenCSSTransform';
+import * as TweenCSSTransform from './TweenCSSTransform';
 
 export {
     TweenConcatStr,

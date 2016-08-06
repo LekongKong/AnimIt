@@ -1,7 +1,7 @@
 /**
  * Created by b1ncer on 16/8/5.
  */
-import {TweenArray} from '../core/Tween';
+import {TweenArray} from '../core/core-tweens';
 import {outputCSSMatrix, inputCSSMatrix, interpret, build} from './Transform';
 
 export {inputCSSMatrix, interpret};
