@@ -20,7 +20,7 @@ var animation = anim({
 
 animation();
 ```
-![初体验](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo1.gif)
+![初体验](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo1.gif)  
 [Live example on JSFiddle](https://jsfiddle.net/b1ncer/0tdn6of2/)
 
 ### 安装
@@ -48,7 +48,7 @@ animation();
 ```
 
 你可以定下动画的初始值和终值,然后在 onUpdate 函数里获取插值,并将插值赋给动画对象.  
-![生命周期](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo2.gif)
+![生命周期](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo2.gif)  
 [Live example on JSFiddle](https://jsfiddle.net/b1ncer/2LLxkfu7/)
 
 ##### 不仅仅对 Number 插值,通过使用不同的 Tween 类,可对任何类型的值做插值动画.
@@ -72,8 +72,8 @@ var animation = anim({
 animation();
 ```javascript
 
-使用内置的 TweenCSSTransform,可以把类似 {translate, rotate, skew, scale} 形式的 Transform 对象转换成浏览器接受的 CSS Transform 字符串.
-![CSS Transform](raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo3.gif)
+使用内置的 TweenCSSTransform,可以把类似 {translate, rotate, skew, scale} 形式的 Transform 对象转换成浏览器接受的 CSS Transform 字符串.  
+![CSS Transform](raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo3.gif)  
 [Live example on JSFiddle](https://jsfiddle.net/b1ncer/a313x1yb/)
 
 ##### 使用标准 Promise 依次播放动画.
@@ -110,8 +110,8 @@ var animation2 = anim({
 animation().then(animation2);
 ```javascript
 
-anim 函数返回一个标准 Promise,可以借助 Promise API 写出优雅的动画序列.
-![Promise](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo4.gif)
+anim 函数返回一个标准 Promise,可以借助 Promise API 写出优雅的动画序列.  
+![Promise](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo4.gif)  
 [Live example on JSFiddle](https://jsfiddle.net/b1ncer/qeqrcnb2/)
 
 ##### 通过自定义 Tween 扩展,轻松实现任何你想要的动画效果.
@@ -136,12 +136,12 @@ anim({
 
 动手实现一个 Tween 扩展非常简单,只要保证你的 Tween 类有一个 get(progress) 函数即可.   
 get(progress) 函数接受一个 progress 参数,该参数代表当前动画执行的进度([0, 1]),并返回根据进度计算出的插值.
-可以看到我们仅使用相当少的代码便实现了*打字机*效果.
-![Custom](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo5.gif)
+可以看到我们仅使用相当少的代码便实现了*打字机*效果.  
+![Custom](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo5.gif)  
 [Live example on JSFiddle](https://jsfiddle.net/b1ncer/98Ljeah4/)
 
 ##### 想象我们还能做到什么
-![Rainbow](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo6.gif)
+![Rainbow](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo6.gif)  
 [Live example on JSFiddle](https://jsfiddle.net/b1ncer/uuhv65dk/)
 
 ### 依赖
