@@ -70,7 +70,7 @@ var animation = anim({
 });
 
 animation();
-```javascript
+```
 
 使用内置的 TweenCSSTransform,可以把类似 {translate, rotate, skew, scale} 形式的 Transform 对象转换成浏览器接受的 CSS Transform 字符串.  
 ![CSS Transform](raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo3.gif)  
