@@ -73,7 +73,7 @@ animation();
 ```
 
 使用内置的 TweenCSSTransform,可以把类似 {translate, rotate, skew, scale} 形式的 Transform 对象转换成浏览器接受的 CSS Transform 字符串.  
-![CSS Transform](http://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo3.gif)  
+![CSS Transform](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo3.gif)  
 [Live example on JSFiddle](https://jsfiddle.net/b1ncer/a313x1yb/)
 
 ##### 使用标准 Promise 依次播放动画.
