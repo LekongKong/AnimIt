@@ -24,7 +24,9 @@ animation();
 [Live example on JSFiddle](https://jsfiddle.net/b1ncer/0tdn6of2/)
 
 ### 安装
+```
 npm install --save animit
+```
 
 ### 使用
 ##### 生命周期函数
