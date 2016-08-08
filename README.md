@@ -110,7 +110,7 @@ var animation2 = anim({
 });
 
 animation().then(animation2);
-```javascript
+```
 
 anim 函数返回一个标准 Promise,可以借助 Promise API 写出优雅的动画序列.  
 ![Promise](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo4.gif)  
