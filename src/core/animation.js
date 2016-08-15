@@ -9,10 +9,10 @@ export const anim = options => {
     const onStart = options.onStart;
     const onUpdate = options.onUpdate;
     const onComplete = options.onComplete;
-    const stopRef = {};
+    let animFn;
 
     const inPromise = resolve => {
-        const animFn = tick(duration, (whenBegin) => {
+        animFn = tick(duration, (whenBegin) => {
             const now = new Date().getTime();
             let progress = duration ? (now - whenBegin) / duration : 1;
             progress = progress > 1 ? 1 : progress;
@@ -21,7 +21,6 @@ export const anim = options => {
                 onUpdate(value, progress, tweenInstance);
             }
         }, onComplete || resolve, onStart);
-        stopRef.stop = animFn.stop;
 
         if (delay) {
             setTimeout(animFn, delay);
@@ -35,7 +34,7 @@ export const anim = options => {
     };
 
     fn.stop = function() {
-        stopRef.stop();
+        animFn.stop();
     };
 
     return fn;
