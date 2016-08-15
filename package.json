@@ -35,6 +35,7 @@
     "lodash": "^4.11.1",
     "normalize-css": "^2.3.1",
     "puer": "^1.1.1",
+    "raf": "^3.2.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "run-sequence": "^1.1.2",

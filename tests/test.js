@@ -2,38 +2,29 @@
  * Created by b1ncer on 16/8/4.
  */
 var AnimIt = require('../dist/anim-it.js');
+var raf = require('raf');
+raf.polyfill();
 
-var obj = {
-    a: 'a',
-    b: 1,
-    c: {
-        d: {
-            e: {
-                f: 100
-            }
-        }
-    }
-};
+var anim = AnimIt.anim;
 
-var tween = new AnimIt.TweenReference({
-    target: obj,
-    setter: {
-        b: new AnimIt.TweenNumber({
-            from: obj.b,
-            to: 100
-        }),
-        c: {
-            d: {
-                e: {
-                    f: new AnimIt.TweenNumber({
-                        from: obj.c.d.e.f,
-                        to: 0,
-                        curve: AnimIt.Easings.outBack
-                    })
-                }
-            }
-        }
+var animation = anim({
+    tween: new AnimIt.TweenNumber({
+        from: 0,
+        to: 100
+    }),
+    duration: 1000,
+    onUpdate: function(value) {
+        console.log(value);
+    },
+    onComplete: function() {
+        console.log('complete');
     }
 });
 
-console.log(tween.get(0.5));
+setTimeout(function() {
+    animation.stop();
+}, 500);
+
+animation();
+
+console.log(animation.stop);
