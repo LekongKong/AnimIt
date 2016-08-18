@@ -3,22 +3,23 @@
 
 ### 初体验
 ```javascript
-var animation = anim({
-    tween: new AnimIt.TweenReference({
-        target: el.style,
-        setter: {
-            opacity: new AnimIt.TweenNumber({
-                from: window.getComputedStyle(el).opacity,
-                to: 0.2,
-                curve: AnimIt.Easings.outBack
-            })
-        }
-    }),
-    delay: 1000,
-    duration: 1000
+var el = document.getElementById('cube');
+
+var animation = AnimIt({
+	target: el.style,
+	setter: {
+		opacity: new AnimIt.tweenNumber({
+			from: Number(window.getComputedStyle(el).opacity),
+			to: 0.2,
+			curve: AnimIt.outBack
+		})
+	},
+	delay: 1000,
+	duration: 1000
 });
 
 animation();
+
 ```
 ![初体验](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo1.gif)  
 [Live example on JSFiddle](https://jsfiddle.net/b1ncer/0tdn6of2/)
@@ -31,22 +32,23 @@ npm install --save animit
 ### 使用
 ##### 生命周期函数
 ```javascript
-var animation = anim({
-    tween: new AnimIt.TweenNumber({
-        from: 0,
-        to: innerWidth - 100,
-        curve: AnimIt.Easings.outBounce
-    }),
-    duration: 1000,
-    onUpdate: function(value) {
-        cubeEl.style.left = value+'px';
-    },
-    onComplete: function() {
-        cubeEl.style.backgroundColor = 'red';
-    }
+var cubeEl = document.getElementById('cube');
+
+var animation = AnimIt({
+	from: 0,
+	to: innerWidth - 100,
+	curve: AnimIt.outBounce,
+	duration: 1000,
+	onUpdate: function(value) {
+		cubeEl.style.left = value+'px';
+	},
+	onComplete: function() {
+		cubeEl.style.backgroundColor = 'red';
+	}
 });
 
 animation();
+
 ```
 
 你可以定下动画的初始值和终值,然后在 onUpdate 函数里获取插值,并将插值赋给动画对象.  
@@ -56,19 +58,21 @@ animation();
 ##### 不仅仅对 Number 插值,通过使用不同的 Tween 类,可对任何类型的值做插值动画.
 *插值 CSS Transform 动画*
 ```javascript
-var animation = anim({
-    tween: new AnimIt.TweenReference({
-        target: cubeEl.style,
-        setter: {transform: new TweenCSSTransform.default({
-            to: {
-                translate: [innerWidth - 200, 0, 0],
-                rotate: [0, 0, Math.PI * 10]
-            },
-            curve: AnimIt.Easings.outBack
-        })}
-    }),
-    duration: 1000,
-    delay: 1000
+var cubeEl = document.getElementById('cube');
+
+var animation = AnimIt({
+	target: cubeEl.style,
+	setter: {
+		transform: AnimIt.Extra.TweenCSSTransform.default({
+			to: {
+				translate: [innerWidth - 200, 0, 0],
+				rotate: [0, 0, Math.PI * 10]
+			},
+			curve: AnimIt.outBack
+		})
+	},
+	duration: 1000,
+	delay: 1000
 });
 
 animation();
@@ -80,33 +84,33 @@ animation();
 
 ##### 使用标准 Promise 依次播放动画.
 ```javascript
-var animation = anim({
-    tween: new AnimIt.TweenReference({
-    target: cubeEl.style,
-        setter: {transform: new TweenCSSTransform.default({
-            to: {
-                translate: [innerWidth - 200, 0, 0],
-                rotate: [0, 0, Math.PI * 10]
-            },
-            curve: AnimIt.Easings.outBack
-        })}
-    }),
-    duration: 1000
+var animation = AnimIt({
+	target: cubeEl.style,
+	setter: {
+		transform: AnimIt.Extra.TweenCSSTransform.default({
+			to: {
+				translate: [innerWidth - 200, 0, 0],
+				rotate: [0, 0, Math.PI * 10]
+			},
+			curve: AnimIt.outBack
+		})
+	},
+	duration: 1000
 });
 
-var animation2 = anim({
-    tween: new AnimIt.TweenReference({
-        target: cube2El.style,
-        setter: {transform: new TweenCSSTransform.default({
-            to: {
-                translate: [innerWidth - 200, 0, 0],
-                rotate: [0, 0, Math.PI * 10]
-            },
-            curve: AnimIt.Easings.outBack
-        })}
-    }),
-    duration: 1000,
-    delay: 100
+var animation2 = AnimIt({
+	target: cube2El.style,
+	setter: {
+		transform: AnimIt.Extra.TweenCSSTransform.default({
+			to: {
+				translate: [innerWidth - 200, 0, 0],
+				rotate: [0, 0, Math.PI * 10]
+			},
+			curve: AnimIt.outBack
+		})
+	},
+	duration: 1000,
+	delay: 100
 });
 
 animation().then(animation2);
@@ -118,21 +122,23 @@ anim 函数返回一个标准 Promise,可以借助 Promise API 写出优雅的�
 
 ##### 通过自定义 Tween 扩展,轻松实现任何你想要的动画效果.
 ```javascript
-function TweenConcatStr(str) {
-    this.str = str;
-    this.get = function(progress) {
+var str = "React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.Declarative views make your code more predictable and easier to debug.";
+var area = document.getElementById('area');
+
+function tweenConcatStr(str) {
+	return function(progress) {
         progress = progress > 1 ? 1 : progress;
         progress = progress < 0 ? 0 : progress;
-        return this.str.slice(0, Math.round(this.str.length * progress));
-    };
+		return str.slice(0, Math.round(str.length * progress));
+	};
 }
 
-anim({
-    tween: new TweenConcatStr(str),
-    duration: 10000,
-    onUpdate: function(value) {
-        area.value = value;
-    }
+AnimIt({
+	tween: tweenConcatStr(str),
+	duration: 10000,
+	onUpdate: function(value) {
+		area.value = value;
+	}
 })();
 ```
 
