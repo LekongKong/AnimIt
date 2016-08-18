@@ -1,6 +1,9 @@
 # AnimIt
 *AnimIt* 是一个可扩展的补间(插值)动画库,你可以借助它轻松实现牛逼的动画效果.
 
+### 目标
+本项目的目标是使用最新的浏览器规范实现高性能，高可扩展的补间动画库。
+
 ### 初体验
 ```javascript
 var el = document.getElementById('cube');
@@ -156,15 +159,25 @@ get(progress) 函数接受一个 progress 参数,该参数代表当前动画执�
 *AnimIt* 遵循 UMD 规范，即：兼容 AMD，CMD 规范并可以全局变量 *AnimIt* 的形式将 ./dist/anim-it.min.js 直接引入 html 文件中。
 
 ### 依赖
-*AnimIt* 核心代码不依赖任何第三方库,但是会用到一些较新的 Api,你可能需要为此引入相应的 Polyfill:
+*AnimIt* 核心代码不依赖任何第三方库,但是会用到一些较新的 Api,为了兼容低版本的浏览器,你可能需要引入相应的 Polyfill:
 
 * [Promise] (https://github.com/stefanpenner/es6-promise)
 
-* requestAnimationFrame (没用过别人的 polyfill ,就不放链接了,防止坑人,可自行实现或搜索,并欢迎推荐靠谱的实现)
+* requestAnimationFrame (https://github.com/chrisdickinson/raf)
 
-* Object.assign (同上)
+* Object.assign
 
 * Extra 中 TweenCSSTransform 库目前依赖一个第三方库 *xcssmatrix* 来把 CSSTransform 字符串转成 Array 的形式，之后的版本会移除该依赖。
+
+### TODOS（欢迎贡献代码）
+
+* Api 文档
+
+* 单元测试
+
+* 移除对 xcssmatrix 的依赖
+
+* extra 部分代码从核心库分离
 
 ### License
 
