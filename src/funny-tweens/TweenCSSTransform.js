@@ -17,7 +17,7 @@ export const tweenCSSTransform = options => {
     const curve = options.curve || (t => t);
     const getter = {};
     for (let key in to) {
-        this.getter[key] = tweenArray({
+        getter[key] = tweenArray({
             from: from[key],
             to: to[key],
             curve: curve

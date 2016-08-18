@@ -17,7 +17,7 @@ module.exports = options => {
     } else {
         if (options.target) {
             animFn = Animation.anim({
-                tween: Tween.tweenRefrence({
+                tween: Tween.tweenReference({
                     target: options.target,
                     setter: options.setter
                 }),
