@@ -1,44 +1,35 @@
 /**
  * Created by b1ncer on 16/8/5.
  */
-import {TweenArray} from '../core/core-tweens';
+import {tweenArray} from '../core/core-tweens';
 import {outputCSSMatrix, inputCSSMatrix, interpret, build} from './Transform';
 
 export {inputCSSMatrix, interpret};
 
-export default class TweenCSSTransform {
-
-    curve;
-
-    from = {
+export const tweenCSSTransform = options => {
+    const from = Object.assign({
         translate: [0, 0, 0],
         rotate: [0, 0, 0],
         skew: [0, 0, 0],
         scale: [1, 1, 1]
-    };
-
-    to;
-
-    getter = {};
-
-    constructor(options) {
-        this.from = Object.assign(this.from, options.from);
-        this.to = Object.assign({}, this.to, options.to);
-        this.curve = options.curve;
-        for (let key in this.to) {
-            this.getter[key] = new TweenArray({
-                from: this.from[key],
-                to: this.to[key],
-                curve: this.curve
-            });
-        }
+    }, options.from);
+    const to = Object.assign({}, options.to);
+    const curve = options.curve || (t => t);
+    const getter = {};
+    for (let key in to) {
+        this.getter[key] = tweenArray({
+            from: from[key],
+            to: to[key],
+            curve: curve
+        });
     }
-
-    get(progress) {
-        const tempValue = {};
-        for (let key in this.getter) {
-            tempValue[key] = this.getter[key].get(progress);
+    return progress => {
+        const res = {};
+        for (let key in getter) {
+            res[key] = getter[key](progress);
         }
-        return outputCSSMatrix(build(Object.assign({}, this.from, tempValue)));
+        return outputCSSMatrix(build(Object.assign({}, from, res)));
     }
-}
+};
+
+export default tweenCSSTransform;

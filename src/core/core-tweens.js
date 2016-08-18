@@ -1,84 +1,51 @@
 /**
  * Created by b1ncer on 16/7/5.
  */
-import _typeof from './type';
-
 const linear = t => t;
 
-export class TweenNumber {
+export const tweenNumber = options => {
+    const from = options.from;
+    const to = options.to;
+    const curve = options.curve || linear;
+    return progress => curve(progress) * (to - from) + from;
+};
 
-    from;
-
-    to;
-
-    curve = linear;
-
-    constructor(options) {
-        Object.assign(this, options);
-        this.from = Number(this.from);
-        this.to = Number(this.to);
-    }
-
-    get(progress) {
-        return this.curve(progress) * (this.to - this.from) + this.from;
-    }
-}
-
-export class TweenArray {
-
-    from;
-
-    to;
-
-    curve = linear;
-
-    value = [];
-
-    constructor(options) {
-        Object.assign(this, options);
-    }
-
-    get(progress) {
-        for (let i = 0, j = this.from.length; i < j; i++) {
-            this.value[i] = this.curve(progress) * (Number(this.to[i]) - Number(this.from[i])) + Number(this.from[i]);
+export const tweenArray = options => {
+    const from = options.from;
+    const to = options.to;
+    const curve = options.curve || linear;
+    return progress => {
+        const res = [];
+        for (let i = 0, j = from.length; i < j; i++) {
+            res[i] = curve(progress) * (to[i] - from[i]) + from[i];
         }
-        return this.value;
-    }
-}
+        return res;
+    };
+};
 
-export class TweenReference {
-
-    target;
-
-    setter;
-
-    fns;
-
-    constructor(options) {
-        Object.assign(this, options);
-        this.fns = TweenReference.visit(this.setter, this.target);
-    }
-
-    static visit(setter, target) {
+export const tweenReference = options => {
+    const target = options.target;
+    const setter = options.setter;
+    const visit = (setter, target) => {
         let fns = [];
         for (let key in setter) {
-            if (_typeof(setter[key].get) == 'function') {
+            if (setter[key] instanceof Function) {
                 fns.push(
                     progress => {
-                        target[key] = setter[key].get(progress);
+                        target[key] = setter[key](progress);
                     }
                 );
             } else {
-                fns = fns.concat(TweenReference.visit(setter[key], target[key]))
+                fns = fns.concat(visit(setter[key], target[key]))
             }
         }
         return fns;
-    }
-
-    get(progress) {
-        this.fns.forEach(fn => {
+    };
+    const fns = visit(setter, target);
+    return progress => {
+        fns.forEach(fn => {
             fn(progress);
         });
-        return this.target;
-    }
-}
+        return target;
+    };
+};

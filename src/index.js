@@ -1,28 +1,51 @@
 /**
  * Created by b1ncer on 16/8/3.
  */
-
-import * as Easings from './core/easing';
+import * as Easing from './core/easing';
 import * as Tween from './core/core-tweens';
 import * as Animation from './core/animation';
-import * as FunnyTweens from './funny-tweens/index';
+import * as Extra from './funny-tweens/index';
 
-const anim = Animation.anim;
-
-const TweenNumber = Tween.TweenNumber;
-
-const TweenArray = Tween.TweenArray;
-
-const TweenReference = Tween.TweenReference;
-
-const TweenObject = Tween.TweenObject;
-
-export {
-    anim,
-    TweenNumber,
-    TweenArray,
-    TweenReference,
-    TweenObject,
-    FunnyTweens,
-    Easings
+module.exports = options => {
+    let animFn;
+    let curve = options.curve;
+    if (curve instanceof String) {
+        curve = Easing[curve];
+    }
+    if (options.tween) {
+        animFn =  Animation.anim(options);
+    } else {
+        if (options.target) {
+            animFn = Animation.anim({
+                tween: Tween.tweenRefrence({
+                    target: options.target,
+                    setter: options.setter
+                }),
+                ...options
+            });
+        } else {
+            animFn = Animation.anim({
+                tween: Array.isArray(options.to) ? Tween.tweenArray({
+                    from: options.from,
+                    to: options.to,
+                    curve: curve
+                }) : Tween.tweenNumber({
+                    from: options.from,
+                    to: options.to,
+                    curve: curve
+                }),
+                ...options
+            });
+        }
+    }
+    return animFn;
 };
+
+module.exports = Object.assign(module.exports,
+    {
+        animation: Animation.anim,
+        ...Tween,
+        ...Easing,
+        Extra
+    }
+);
