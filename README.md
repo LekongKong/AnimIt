@@ -152,15 +152,19 @@ get(progress) 函数接受一个 progress 参数,该参数代表当前动画执�
 ![Rainbow](https://raw.githubusercontent.com/LekongKong/AnimIt/master/examples/demo6.gif)  
 [Live example on JSFiddle](https://jsfiddle.net/b1ncer/uuhv65dk/)
 
+### 模块规范
+*AnimIt* 遵循 UMD 规范，即：兼容 AMD，CMD 规范并可以全局变量 *AnimIt* 的形式将 ./dist/anim-it.min.js 直接引入 html 文件中。
+
 ### 依赖
-*AnimIt* 兼容 AMD, CMD 规范,你也可以以全局变量的形式将 ./dist/anim-it.js 直接引入 Html 中.
-它不依赖任何第三方库,但是会用到一些较新的 Api,你可能需要为此引入相应的 Polyfill:
+*AnimIt* 核心代码不依赖任何第三方库,但是会用到一些较新的 Api,你可能需要为此引入相应的 Polyfill:
 
 * [Promise] (https://github.com/stefanpenner/es6-promise)
 
 * requestAnimationFrame (没用过别人的 polyfill ,就不放链接了,防止坑人,可自行实现或搜索,并欢迎推荐靠谱的实现)
 
 * Object.assign (同上)
+
+* Extra 中 TweenCSSTransform 库目前依赖一个第三方库 *xcssmatrix* 来把 CSSTransform 字符串转成 Array 的形式，之后的版本会移除该依赖。
 
 ### License
 
